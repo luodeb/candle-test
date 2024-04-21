@@ -1,13 +1,6 @@
 use candle_nn::{
-    Linear, VarBuilder, Conv2d, ModuleT, VarMap};
+    VarBuilder, ModuleT, VarMap};
 use candle_core::{Tensor, Error};
-
-pub struct TrainingArgs {
-    pub learning_rate: f64,
-    pub load: Option<String>,
-    pub save: Option<String>,
-    pub epochs: usize,
-}
 
 pub struct Config {
     lr: f64,
@@ -51,10 +44,10 @@ pub trait Model : Sized {
 }
 
 pub struct CNN {
-    conv1: Conv2d,
-    conv2: Conv2d,
-    fc1: Linear,
-    fc2: Linear,
+    conv1: candle_nn::Conv2d,
+    conv2: candle_nn::Conv2d,
+    fc1: candle_nn::Linear,
+    fc2: candle_nn::Linear,
     dropout: candle_nn::Dropout,
 }
 
@@ -62,8 +55,8 @@ impl Model for CNN {
     fn new(vs: VarBuilder, labels: usize) -> Result<Self, Error> {
         let conv1 = candle_nn::conv2d(1, 4, 5, Default::default(), vs.pp("c1"))?;
         let conv2 = candle_nn::conv2d(4, 8, 5, Default::default(), vs.pp("c2"))?;
-        let fc1 = candle_nn::linear(1024, 1024, vs.pp("fc1"))?;
-        let fc2 = candle_nn::linear(1024, labels, vs.pp("fc2"))?;
+        let fc1 = candle_nn::linear(128, 64, vs.pp("fc1"))?;
+        let fc2 = candle_nn::linear(64, labels, vs.pp("fc2"))?;
         let dropout = candle_nn::Dropout::new(0.5);
         Ok(Self {
             conv1,

@@ -82,7 +82,7 @@ fn main() -> anyhow::Result<()> {
         0.05, // 学习率
         None, // 加载模型
         None, // 保存模型
-        1,    // epoch
+        10,    // epoch
         true, // 是否训练
         1024, // batch_size
     );
