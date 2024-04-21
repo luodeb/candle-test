@@ -1,0 +1,18 @@
+[package]
+name = "candle-test"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+candle-nn = "0.4.1"
+candle-core = "0.4.1"
+candle-datasets = "0.4.1"
+anyhow = "1.0.75"
+flate2 = "1.0.28"
+rand = "0.8.5"
+
+[features]
+cuda = ["candle-core/cuda", "candle-nn/cuda"]
